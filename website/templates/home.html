@@ -1,0 +1,98 @@
+{% extends "base.html" %} 
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<!-- Link to the home.css stylesheet -->
+<link href="{{ url_for('static', filename='css/home.css') }}" rel="stylesheet">
+
+<div class="services-grid">
+    <div class="container">
+        <h2 class="text-center mb-5" style="color: var(--primary-color);">Our Comprehensive Household Services</h2>
+        <div class="row">
+            {% set services = [
+                ('Plumbing', 'Reliable solutions for all your plumbing needs', 'wrench'),
+                ('Cleaning', 'Professional and thorough cleaning services', 'broom'),
+                ('Electrical', 'Expert electrical repairs and installations', 'zap'),
+                ('Painting', 'Interior and exterior painting with precision', 'paint-bucket'),
+                ('Gardening', 'Professional landscaping and garden care', 'leaf'),
+                ('Carpentry', 'Custom woodwork and furniture repairs', 'hammer'),
+                ('AC Repair', 'Expert air conditioning maintenance', 'thermometer'),
+                ('Pest Control', 'Comprehensive pest management solutions', 'bug'),
+                ('Appliance Repair', 'Quick and reliable appliance services', 'cpu')
+            ] %}
+
+            {% for name, description, icon in services %}
+            <div class="col-md-4 mb-4">
+                <div class="service-card text-center p-4">
+                    <div class="service-card-icon">
+                        <i class="lucide-{{ icon }}"></i>
+                    </div>
+                    <h5 class="card-title mb-3">{{ name }}</h5>
+                    <p class="card-text">{{ description }}</p>
+                    <a href="/login" class="btn btn-outline-primary mt-3">Explore Service</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<div class="cta-section">
+    <div class="container">
+        <h2>Ready to Simplify Your Home Maintenance?</h2>
+        <p class="lead mb-4">Join thousands of satisfied customers and experience hassle-free services.</p>
+        <a href="/customer_signup" class="btn btn-light btn-lg">Get Started Now</a>
+    </div>
+</div>
+
+<div class="testimonial-section">
+    <div class="container">
+        <h2 class="text-center mb-5" style="color: var(--primary-color);">What Our Customers Say</h2>
+        <div id="testimonialCarousel" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                {% set testimonials = [
+                    ('Jane Doe', 'Amazing service! Highly recommend!'),
+                    ('John Smith', 'Quick and reliable professionals.'),
+                    ('Mary Johnson', 'Affordable and trustworthy.')
+                ] %}
+
+                {% for name, quote in testimonials %}
+                <div class="carousel-item {% if loop.first %}active{% endif %} text-center">
+                    <blockquote class="blockquote">
+                        <p class="mb-0">"{{ quote }}"</p>
+                        <footer class="blockquote-footer">{{ name }}</footer>
+                    </blockquote>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h5>About Us</h5>
+                <p>Your one-stop platform for comprehensive household services.</p>
+            </div>
+            <div class="col-md-4">
+                <h5>Quick Links</h5>
+                <ul class="list-unstyled">
+                    <li><a href="/" class="text-white">Home</a></li>
+                    <li><a href="/login" class="text-white">Login</a></li>
+                    <li><a href="/contact" class="text-white">Contact</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h5>Follow Us</h5>
+                <div>
+                    <a href="#" class="text-white mr-3"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="text-white mr-3"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-white"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+{% endblock %}

@@ -1,0 +1,135 @@
+:root {
+    --primary-color: #007bff;
+    --success-color: #28a745;
+    --danger-color: #dc3545;
+    --info-color: #17a2b8;
+    --warning-color: #ffc107;
+    --table-hover-color: #f8f9fa;
+    --header-bg: #343a40;
+    --text-color: #495057;
+    --card-bg: #ffffff;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f6f7;
+    color: var(--text-color);
+}
+
+.container {
+    margin-top: 30px;
+}
+
+.card {
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    font-size: 1.25rem;
+    font-weight: bold;
+    border-bottom: 2px solid #ddd;
+}
+
+.card-header.bg-primary {
+    background-color: var(--primary-color);
+}
+
+.card-header.bg-secondary {
+    background-color: var(--info-color);
+}
+
+.card-header.bg-success {
+    background-color: var(--success-color);
+}
+
+.card-header.bg-warning {
+    background-color: var(--warning-color);
+}
+
+.card-header.bg-info {
+    background-color: var(--info-color);
+}
+
+.table {
+    margin-bottom: 0;
+}
+
+.table th, .table td {
+    padding: 12px;
+    vertical-align: middle;
+}
+
+.table-striped tbody tr:nth-child(odd) {
+    background-color: var(--table-hover-color);
+}
+
+.table-bordered {
+    border: 1px solid #ddd;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.table .btn {
+    padding: 5px 10px;
+}
+
+/* Form Styling */
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+}
+
+/* Button Styling */
+.btn {
+    font-size: 1rem;
+    padding: 8px 15px;
+}
+
+.btn-sm {
+    font-size: 0.875rem;
+    padding: 6px 12px;
+}
+
+.btn-danger {
+    background-color: var(--danger-color);
+    border: none;
+}
+
+.btn-danger:hover {
+    background-color: darkred;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: darkblue;
+}
+
+.btn-success {
+    background-color: var(--success-color);
+    border: none;
+}
+
+.btn-success:hover {
+    background-color: darkgreen;
+}
+
+.btn-warning {
+    background-color: var(--warning-color);
+    border: none;
+}
+
+.btn-warning:hover {
+    background-color: darkorange;
+}

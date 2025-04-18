@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}My Profile{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center">My Profile</h2>
+
+    <form method="POST" class="mt-4">
+        <div class="mb-3">
+            <label for="full_name" class="form-label">Full Name</label>
+            <input type="text" class="form-control" id="full_name" name="full_name" value="{{ user.full_name }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email Address</label>
+            <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="phone_number" class="form-label">Phone Number</label>
+            <input type="text" class="form-control" id="phone_number" name="phone_number" value="{{ user.phone_number }}" required>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Update Profile</button>
+    </form>
+</div>
+{% endblock %}

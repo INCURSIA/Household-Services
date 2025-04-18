@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Professional Summary{% endblock %}
+
+{% block content %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Service Request Summary</h1>
+
+    <div class="card mb-4">
+        <div class="card-header bg-info text-white">
+            <h2>Service Requests Overview</h2>
+        </div>
+        <div class="card-body">
+            <canvas id="serviceRequestsChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<script>
+    const ctx = document.getElementById('serviceRequestsChart').getContext('2d');
+    const serviceRequestsChart = new Chart(ctx, {
+        type: 'bar', 
+        data: {
+            labels: ['Assigned', 'Completed', 'Pending'], 
+            datasets: [{
+                label: '# of Requests',
+                data: [{{ assigned_count }}, {{ completed_count }}, {{ pending_count }}],
+                backgroundColor: [
+                    'rgba(54, 162, 235, 0.7)', 
+                    'rgba(75, 192, 192, 0.7)', 
+                    'rgba(255, 99, 132, 0.7)'  
+                ],
+                borderColor: [
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(255, 99, 132, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true 
+                }
+            }
+        }
+    });
+</script>
+
+{% endblock %}

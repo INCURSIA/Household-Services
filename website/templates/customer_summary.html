@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}Customer Summary{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center">Your Service Request Summary</h2>
+    
+    <!-- Display the summary of requests -->
+    <div class="row my-4">
+        <div class="col-md-4">
+            <div class="card bg-info text-white">
+                <div class="card-body text-center">
+                    <h4 class="card-title">Pending Requests</h4>
+                    <p class="card-text">{{ requested_count }}</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card bg-warning text-white">
+                <div class="card-body text-center">
+                    <h4 class="card-title">Assigned Requests</h4>
+                    <p class="card-text">{{ assigned_count }}</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card bg-success text-white">
+                <div class="card-body text-center">
+                    <h4 class="card-title">Closed Requests</h4>
+                    <p class="card-text">{{ closed_count }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add a Pie Chart of Request Status -->
+    <h4 class="text-center">Request Status Breakdown</h4>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <canvas id="statusChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var statusData = {
+        requested: {{ requested_count }},
+        assigned: {{ assigned_count }},
+        closed: {{ closed_count }}
+    };
+
+    var ctx = document.getElementById('statusChart').getContext('2d');
+    var statusChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ['Pending', 'Assigned', 'Closed'],
+            datasets: [{
+                data: [statusData.requested, statusData.assigned, statusData.closed],
+                backgroundColor: ['#3498db', '#f39c12', '#2ecc71'],
+                borderColor: '#fff',
+                borderWidth: 1
+            }]
+        }
+    });
+</script>
+{% endblock %}
+

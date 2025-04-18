@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block title %}Customer Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center">Welcome to Your Dashboard</h2>
+
+    <!-- Button to view customer summary -->
+<a href="{{ url_for('custo.customer_summary') }}" class="btn btn-primary btn-lg">View Summary</a>
+<!-- Button to view customer profile -->
+<a href="{{ url_for('custo.customer_profile') }}" class="btn btn-secondary btn-lg">My Profile</a>
+
+
+<div class="container my-5">
+    <!-- Heading Section -->
+    <div class="text-center mb-4">
+        <h1 class="fw-bold text-primary">Search for Services</h1>
+        <p class="text-muted fs-4">Find the best services near you by name or pin code. We have a wide range of professionals ready to assist you.</p>
+    </div>
+
+    <!-- Search Form -->
+    <form method="GET" action="{{ url_for('custo.customer_dashboard') }}" class="row g-3 shadow-lg p-4 rounded-3 bg-light mb-5">
+        <div class="col-md-6">
+            <input type="text" name="query" class="form-control form-control-lg" placeholder="Search by service name" aria-label="Search by service name">
+        </div>
+        <div class="col-md-4">
+            <input type="text" name="pin_code" class="form-control form-control-lg" placeholder="Search by pin code" aria-label="Search by pin code">
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary w-100 btn-lg">Search</button>
+        </div>
+    </form>
+
+    <!-- Services List -->
+    <div class="row mt-5">
+        {% for service in services %}
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-lg border-light rounded-3">
+                <div class="card-body">
+                    <h5 class="card-title text-primary">{{ service.name }}</h5>
+                    <p class="card-text">{{ service.description }}</p>
+                    <p class="text-success fw-bold">Base Price: ₹{{ service.base_price }}</p>
+                    <form method="POST" action="{{ url_for('custo.request_service_view', service_id=service.id) }}">
+                        <button type="submit" class="btn btn-success w-100">Request Service</button>
+                    </form>                    
+                </div>
+                <div class="card-footer text-muted small">
+                    Service Pin Code: <strong>{{ service.pin_code }}</strong>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Customer Service Requests -->
+    <div class="mt-5">
+        <h3 class="fw-bold text-dark">Your Service Requests</h3>
+        <p class="text-muted">Track the status of your service requests below.</p>
+        <table class="table table-striped table-hover shadow-sm rounded-3">
+            <thead>
+                <tr>
+                    <th>Service Name</th>
+                    <th>Status</th>
+                    <th>Date Created</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for request in requests %}
+                <tr>
+                    <td class="fw-semibold">{{ request.service.name }}</td>
+                    <td>
+                        <span class="badge 
+                            {% if request.status == 'Pending' %}badge-warning{% endif %}
+                            {% if request.status == 'Assigned' %}badge-info{% endif %}
+                            {% if request.status == 'Closed' %}badge-success{% endif %}
+                            {% if request.status == 'Rejected' %}badge-danger{% endif %}
+                        ">{{ request.status }}</span>
+                    </td>
+                    <td>{{ request.date_created.strftime('%Y-%m-%d %H:%M') }}</td>
+                    <td>
+                        {% if request.status == 'Pending' %}
+                            <form method="POST" action="{{ url_for('custo.close_request', request_id=request.id) }}" style="display:inline;">
+                                <button type="submit" class="btn btn-danger btn-sm">Close</button>
+                            </form>
+                        {% endif %}
+                        {% if request.status == 'Closed' %}
+                            <a href="{{ url_for('custo.edit_request', request_id=request.id) }}" class="btn btn-warning btn-sm">Edit</a>
+                            <form method="POST" action="{{ url_for('custo.add_remark', request_id=request.id) }}" style="display:inline;">
+                                <input type="text" name="remark" class="form-control form-control-sm" placeholder="Add remark" required>
+                                <button type="submit" class="btn btn-success btn-sm mt-1">Add</button>
+                            </form>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

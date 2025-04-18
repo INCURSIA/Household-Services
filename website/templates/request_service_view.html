@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Request Service{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Request {{ service.name }}</h2>
+    <p><strong>Description:</strong> {{ service.description }}</p>
+
+    <form method="POST">
+        <h3>Select a Professional</h3>
+
+        <!-- List all available professionals for the service -->
+        <div class="list-group">
+            {% for professional in professionals %}
+                <div class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5>{{ professional.full_name }}</h5>
+                        <p>Email: {{ professional.email }}</p>
+                    </div>
+                    <button type="submit" class="btn btn-primary" name="professional_email" value="{{ professional.email }}">
+                        Book Service
+                    </button>
+                </div>
+            {% endfor %}
+        </div>
+    </form>
+</div>
+{% endblock %}

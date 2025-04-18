@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+
+{% block title %}Service Professional Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center">Welcome to the Professional Dashboard</h2>
+
+        <a href="{{ url_for('proff.professional_summary') }}" class="btn btn-primary btn-lg">View Summary</a>
+        <a href="{{ url_for('proff.professional_profile') }}" class="btn btn-secondary btn-lg">My Profile</a>
+
+    <!-- Pending Requests -->
+    <div class="mt-4">
+        <h4>Pending Service Requests</h4>
+        <table class="table table-bordered mt-3">
+            <thead class="table-dark">
+                <tr>
+                    <th>Customer Name</th>
+                    <th>Service Type</th>
+                    <th>Date of Request</th>
+                    <th>Location</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if pending_requests %}
+                    {% for request in pending_requests %}
+                    <tr>
+                        <td>{{ request.user.full_name }}</td>
+                        <td>{{ request.service.name }}</td>
+                        <td>{{ request.date_created.strftime('%Y-%m-%d %H:%M') }}</td>
+                        <td>{{ request.service.pin_code }}</td>
+                        <td>
+                            <form method="POST" action="{{ url_for('proff.accept_request', request_id=request.id) }}">
+                                <button type="submit" class="btn btn-success">Accept</button>
+                            </form>
+                            <form method="POST" action="{{ url_for('proff.reject_request', request_id=request.id) }}">
+                                <button type="submit" class="btn btn-danger">Reject</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="5">No pending requests at the moment.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Active Requests -->
+    <div class="mt-4">
+        <h4>Active Service Requests</h4>
+        <table class="table table-bordered mt-3">
+            <thead class="table-dark">
+                <tr>
+                    <th>Customer Name</th>
+                    <th>Service Type</th>
+                    <th>Date of Request</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if active_requests %}
+                    {% for request in active_requests %}
+                    <tr>
+                        <td>{{ request.user.full_name }}</td>
+                        <td>{{ request.service.name }}</td>
+                        <td>{{ request.date_created.strftime('%Y-%m-%d %H:%M') }}</td>
+                        <td>{{ request.status }}</td>
+                        <td>
+                            <form method="POST" action="{{ url_for('proff.close_request', request_id=request.id) }}">
+                                <button type="submit" class="btn btn-primary">Mark as Complete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="5">No active requests at the moment.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Completed Requests -->
+    <div class="mt-4">
+        <h4>Completed Service Requests</h4>
+        <table class="table table-bordered mt-3">
+            <thead class="table-dark">
+                <tr>
+                    <th>Customer Name</th>
+                    <th>Service Type</th>
+                    <th>Date of Completion</th>
+                    <th>Remarks</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if completed_requests %}
+                    {% for request in completed_requests %}
+                    <tr>
+                        <td>{{ request.user.full_name }}</td>
+                        <td>{{ request.service.name }}</td>
+                        <td>{{ request.date_created.strftime('%Y-%m-%d %H:%M') }}</td>
+                        <td>{{ request.remarks if request.remarks else "No remarks" }}</td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="4">No completed requests yet.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

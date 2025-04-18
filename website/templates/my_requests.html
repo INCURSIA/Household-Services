@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Your Service Requests{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="fw-bold">Your Service Requests</h1>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Service Name</th>
+                <th>Status</th>
+                <th>Date Created</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for request in requests %}
+            <tr>
+                <td>{{ request.service.name }}</td>
+                <td>{{ request.status }}</td>
+                <td>{{ request.date_created.strftime('%Y-%m-%d %H:%M') }}</td>
+                
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
