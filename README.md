@@ -57,7 +57,7 @@ A multi-user dynamic web application designed for managing and booking home serv
 | Frontend      | HTML, CSS, Bootstrap   |
 | Templating    | Jinja2                 |
 | Database      | SQLite (only)          |
-| Auth          | Flask Session / JWT    |
+| Auth          | Flask Session          |
 
 ---
 
